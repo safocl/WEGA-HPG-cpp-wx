@@ -1,3 +1,4 @@
+#include <tuple>
 #include <wx/radiobox.h>
 #include <wx/colour.h>
 #include <wx/sizer.h>
@@ -138,9 +139,26 @@ private:
     Elements mElements;
 };
 
-class MacroPanel : public wxPanel {
+template < class... Elements > class MacroPanel : public wxPanel {
 public:
-    MacroPanel( wxWindow * parent );
+    MacroPanel( wxWindow * parent ) : wxPanel( parent ) {
+        auto gridSizer = new wxFlexGridSizer( 1 );
+        //auto gridSizer = new wxBoxSizer( wxVERTICAL );
+
+        gridSizer->SetFlexibleDirection( wxVERTICAL );
+        gridSizer->SetNonFlexibleGrowMode(
+        wxFlexSizerGrowMode::wxFLEX_GROWMODE_ALL );
+        gridSizer->SetVGap( 9 );
+        gridSizer->SetHGap( 9 );
+
+        wxSizerFlags defaultFlags( 0 );
+        defaultFlags.Expand();
+
+        ( gridSizer->Add( ( new Elements( this ) ), defaultFlags ), ... );
+
+        SetSizerAndFit( gridSizer );
+    }
+
     virtual ~MacroPanel() = default;
 };
 }   // namespace ui

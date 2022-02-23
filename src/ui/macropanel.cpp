@@ -15,25 +15,6 @@
 
 namespace ui {
 
-MacroPanel::MacroPanel( wxWindow * parent ) : wxPanel( parent ) {
-    auto gridSizer = new wxFlexGridSizer( 1 );
-    //auto gridSizer = new wxBoxSizer( wxVERTICAL );
-
-    gridSizer->SetFlexibleDirection( wxVERTICAL );
-    gridSizer->SetNonFlexibleGrowMode( wxFlexSizerGrowMode::wxFLEX_GROWMODE_ALL );
-    gridSizer->SetVGap( 9 );
-    gridSizer->SetHGap( 9 );
-
-    wxSizerFlags defaultFlags( 0 );
-    defaultFlags.Expand();
-
-    gridSizer->Add( new Macroprofile( this ), defaultFlags );
-    gridSizer->Add( new ElementsRatio( this ), defaultFlags );
-    gridSizer->Add( new SaltCompositions( this ), defaultFlags );
-
-    SetSizerAndFit( gridSizer );
-}
-
 namespace {
 wxSpinCtrlDouble * allocSpin( wxWindow * parent, double incrementStep = 1.0 ) {
     auto spin = new wxSpinCtrlDouble( parent, wxID_ANY, wxT( "0.0" ) );
