@@ -1,6 +1,6 @@
-#include <tuple>
+#include "constants.hpp"
+
 #include <wx/radiobox.h>
-#include <wx/colour.h>
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/stattext.h>
@@ -12,8 +12,6 @@
 namespace ui {
 
 using BoxType = wxStaticBoxSizer;
-
-const wxColour darkGreen( 30, 60, 20 );
 
 class Macroprofile : public BoxType {
 public:
@@ -139,26 +137,4 @@ private:
     Elements mElements;
 };
 
-template < class... Elements > class MacroPanel : public wxPanel {
-public:
-    MacroPanel( wxWindow * parent ) : wxPanel( parent ) {
-        auto gridSizer = new wxFlexGridSizer( 1 );
-        //auto gridSizer = new wxBoxSizer( wxVERTICAL );
-
-        gridSizer->SetFlexibleDirection( wxVERTICAL );
-        gridSizer->SetNonFlexibleGrowMode(
-        wxFlexSizerGrowMode::wxFLEX_GROWMODE_ALL );
-        gridSizer->SetVGap( 9 );
-        gridSizer->SetHGap( 9 );
-
-        wxSizerFlags defaultFlags( 0 );
-        defaultFlags.Expand();
-
-        ( gridSizer->Add( ( new Elements( this ) ), defaultFlags ), ... );
-
-        SetSizerAndFit( gridSizer );
-    }
-
-    virtual ~MacroPanel() = default;
-};
 }   // namespace ui

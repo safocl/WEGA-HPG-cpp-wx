@@ -1,5 +1,6 @@
 #include "mainwindow.hpp"
 #include "macropanel.hpp"
+#include "micropanel.hpp"
 
 #include <stdexcept>
 #include <wx/defs.h>
@@ -20,12 +21,12 @@ wxFrame( nullptr, wxID_ANY, "WEGA-HPG-cpp-wx" ), mTabs( new wxNotebook() ) {
     mainHSizer->Add( mainVSizer, wxSizerFlags( 1 ).Top().Expand() );
 
     mPanels.emplace_back(
-    new MacroPanel< Macroprofile, ElementsRatio, SaltCompositions >( mTabs ) );
-    //mPanels.emplace_back( new MacroPanel( mTabs ) );
+    new PlacePanel< Macroprofile, ElementsRatio, SaltCompositions >( mTabs ) );
+    mTabs->AddPage( mPanels.back(), "Macroprofile" );
 
-    for ( auto & panel : mPanels ) {
-        mTabs->AddPage( panel, "TAB1" );
-    }
+    mPanels.emplace_back(
+    new PlacePanel< MicroProfile, MicroCompositions >( mTabs ) );
+    mTabs->AddPage( mPanels.back(), "Microprofile" );
 
     SetSizerAndFit( mainHSizer );
 }
